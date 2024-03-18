@@ -7,6 +7,10 @@ import Popular_Restaurants_Data from './Popular_Restaurants_Data';
 import Exclusive_Deals from './components/Exclusive Deals/Exclusive_Deals';
 import Join_Us from './components/Join Us/Join_Us';
 import Navbar from './components/Navbar/Navbar';
+import Order_App from './components/Order App/Order_App';
+import Achievement from './components/Achievement/Achievement';
+import Footer from './components/Footer/Footer';
+import Features from './components/Features/Features';
 
 const App = () => {
   return (
@@ -64,6 +68,11 @@ const App = () => {
         </div>
       </div>
 
+      {/* Order App Banner */}
+      <div>
+        <Order_App />
+      </div>
+
       {/* Join With Us */}
       <div>
 
@@ -72,8 +81,19 @@ const App = () => {
         </div>
         <Join_Us />
       </div>
-      
 
+      {/* Achivements */}
+      {/* <div>
+        <Achievement />
+      </div> */}
+
+      {/*  */}
+      {/* <div>
+        <Footer />
+      </div> */}
+      
+      {/*  */}
+      <Features />
     </div>
     </>
   );
