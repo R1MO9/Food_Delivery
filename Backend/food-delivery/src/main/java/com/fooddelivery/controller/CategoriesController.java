@@ -1,7 +1,6 @@
 package com.fooddelivery.controller;
 
 import com.fooddelivery.constants.FoodDeliveryConstants;
-import com.fooddelivery.dto.CategoriesDto;
 import com.fooddelivery.dto.ErrorResponseDto;
 import com.fooddelivery.dto.ResponseDto;
 import com.fooddelivery.entity.Categories;
@@ -14,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -88,8 +86,8 @@ public class CategoriesController {
     }
     )
     @GetMapping("/fetch")
-    public ResponseEntity<List<CategoriesDto>> fetchCategories() {
-        List<CategoriesDto> categories = categoriesService.fetchCategories();
+    public ResponseEntity<List<Categories>> fetchCategories() {
+        List<Categories> categories = categoriesService.fetchCategories();
         return ResponseEntity.status(HttpStatus.OK).body(categories);
     }
 
@@ -112,8 +110,8 @@ public class CategoriesController {
     }
     )
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateCategories(@RequestBody CategoriesDto categoriesDto) {
-        categoriesService.updateCategories(categoriesDto);
+    public ResponseEntity<ResponseDto> updateCategories(@RequestBody Categories categories) {
+        categoriesService.updateCategories(categories);
 
         return new ResponseEntity<>(
                 new ResponseDto(FoodDeliveryConstants.STATUS_200, FoodDeliveryConstants.MESSAGE_200),
