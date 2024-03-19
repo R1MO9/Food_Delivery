@@ -88,13 +88,14 @@ const App = () => {
       </div> */}
 
       {/*  */}
-      {/* <div>
-        <Footer />
-      </div> */}
-      
-      {/*  */}
       <Features />
+
+      
     </div>
+    {/*  */}
+    <div>
+        <Footer />
+      </div>
     </>
   );
 }
