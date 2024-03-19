@@ -1,9 +1,7 @@
 package com.fooddelivery.service;
 
-import com.fooddelivery.dto.CategoriesDto;
 import com.fooddelivery.entity.Categories;
 import org.bson.types.ObjectId;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,12 +16,12 @@ public interface ICategoriesService {
     /**
      * @return CategoriesDto - List of categories
      */
-    public List<CategoriesDto> fetchCategories();
+    public List<Categories> fetchCategories();
 
     /**
      * @param categoriesDto - categories information you wanted to update
      */
-    public void updateCategories(CategoriesDto categoriesDto);
+    public void updateCategories(Categories categoriesDto);
 
     /**
      * @param id - id of categories you wanted to delete

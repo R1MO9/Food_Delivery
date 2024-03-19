@@ -1,6 +1,5 @@
 package com.fooddelivery.service.impl;
 
-import com.fooddelivery.dto.CategoriesDto;
 import com.fooddelivery.entity.Categories;
 import com.fooddelivery.exceptions.ResourceNotFoundException;
 import com.fooddelivery.repository.CategoriesRepository;
@@ -33,12 +32,12 @@ public class CategoriesServiceImpl implements ICategoriesService {
     /**
      * @return CategoriesDto - List of categories
      */
-    public List<CategoriesDto> fetchCategories() {
+    public List<Categories> fetchCategories() {
         List<Categories> categories = categoriesRepository.findAll();
-        List<CategoriesDto> categoriesDto = new ArrayList<>();
+        List<Categories> categoriesDto = new ArrayList<>();
 
         for (Categories item : categories) {
-            CategoriesDto category = new CategoriesDto();
+            Categories category = new Categories();
             String imagePath = "static/images/categories/" + item.getImageUrl();
             String responseImagePath = "/images/categories/" + item.getImageUrl();
             Resource imageResource = new ClassPathResource(imagePath);
@@ -60,20 +59,20 @@ public class CategoriesServiceImpl implements ICategoriesService {
     }
 
     /**
-     * @param categoriesDto - categories information you wanted to update
+     * @param categories - categories information you wanted to update
      */
     @Override
-    public void updateCategories(CategoriesDto categoriesDto) {
-        Optional<Categories> categories = categoriesRepository.findById(categoriesDto.getId());
+    public void updateCategories(Categories categories) {
+        Optional<Categories> category = categoriesRepository.findById(categories.getId());
 
-        if (categories.isPresent()) {
-            Categories category = categories.get();
-            category.setName((!(category.getName().equals(categoriesDto.getName())) ? categoriesDto.getName() : category.getName()));
-            category.setRestaurants((!(category.getRestaurants().equals(categoriesDto.getRestaurants())) ? categoriesDto.getRestaurants() : category.getRestaurants()));
-            category.setImageUrl((!(category.getImageUrl().equals(categoriesDto.getImageUrl())) ? categoriesDto.getImageUrl() : category.getImageUrl()));
-            categoriesRepository.save(category);
+        if (category.isPresent()) {
+            Categories category1 = category.get();
+            category1.setName((!(category1.getName().equals(categories.getName())) ? categories.getName() : category1.getName()));
+            category1.setRestaurants((!(category1.getRestaurants().equals(categories.getRestaurants())) ? categories.getRestaurants() : category1.getRestaurants()));
+            category1.setImageUrl((!(category1.getImageUrl().equals(categories.getImageUrl())) ? categories.getImageUrl() : category1.getImageUrl()));
+            categoriesRepository.save(category1);
         } else {
-            throw new ResourceNotFoundException("Categories", "Categories Id", categoriesDto.getId().toString());
+            throw new ResourceNotFoundException("Categories", "Categories Id", categories.getId().toString());
         }
     };
 
