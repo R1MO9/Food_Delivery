@@ -1,30 +1,44 @@
 package com.fooddelivery.service.impl;
 
+import com.fooddelivery.dto.CategoryDto;
 import com.fooddelivery.entity.Categories;
 import com.fooddelivery.exceptions.ResourceNotFoundException;
 import com.fooddelivery.repository.CategoriesRepository;
+import com.fooddelivery.repository.StorageRepository;
 import com.fooddelivery.service.ICategoriesService;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class CategoriesServiceImpl implements ICategoriesService {
 
+    @Autowired
     private CategoriesRepository categoriesRepository;
 
+    @Autowired
+    private StorageServiceImpl storageService;
     /**
-     * @param categories - Categories information
+     * @param categoryDto - Categories information
      * @return boolean - if categories is created then return true otherwise return false
      */
-    public boolean createCategories(Categories categories) {
+    public boolean createCategories(CategoryDto categoryDto) throws IOException {
+        storageService.uploadImage(categoryDto.getFile());
+        Categories categories = Categories.builder()
+                .name(categoryDto.getName())
+                .restaurants(categoryDto.getRestaurants())
+                .quantity(categoryDto.getQuantity())
+                .imageName(categoryDto.getFile().getOriginalFilename())
+                .build();
+
         categoriesRepository.save(categories);
         return true;
     }
@@ -33,7 +47,7 @@ public class CategoriesServiceImpl implements ICategoriesService {
      * @return CategoriesDto - List of categories
      */
     public List<Categories> fetchCategories() {
-        List<Categories> categories = categoriesRepository.findAll();
+        /*List<Categories> categories = categoriesRepository.findAll();
         List<Categories> categoriesDto = new ArrayList<>();
 
         for (Categories item : categories) {
@@ -55,7 +69,8 @@ public class CategoriesServiceImpl implements ICategoriesService {
 
             categoriesDto.add(category);
         }
-        return categoriesDto;
+        return categoriesDto;*/
+        return null;
     }
 
     /**
@@ -63,7 +78,7 @@ public class CategoriesServiceImpl implements ICategoriesService {
      */
     @Override
     public void updateCategories(Categories categories) {
-        Optional<Categories> category = categoriesRepository.findById(categories.getId());
+        /*Optional<Categories> category = categoriesRepository.findById(categories.getId());
 
         if (category.isPresent()) {
             Categories category1 = category.get();
@@ -73,7 +88,7 @@ public class CategoriesServiceImpl implements ICategoriesService {
             categoriesRepository.save(category1);
         } else {
             throw new ResourceNotFoundException("Categories", "Categories Id", categories.getId().toString());
-        }
+        }*/
     };
 
     /**

@@ -1,4 +1,4 @@
-package com.fooddelivery.controller;
+package com.fooddelivery.rest.controller;
 
 import com.fooddelivery.constants.FoodDeliveryConstants;
 import com.fooddelivery.dto.ErrorResponseDto;

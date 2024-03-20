@@ -1,4 +1,4 @@
-package com.fooddelivery.controller;
+package com.fooddelivery.rest.controller;
 
 import com.fooddelivery.entity.Person;
 import com.fooddelivery.service.IPersonService;

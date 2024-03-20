@@ -2,6 +2,7 @@ package com.fooddelivery.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Categories {
     @Schema(
             description = "id of a categories"
@@ -31,7 +33,11 @@ public class Categories {
     )
     private String restaurants;
     @Schema(
+            description = "available quantity of a particular retaurants"
+    )
+    private String quantity;
+    @Schema(
             description = "image url of a categories"
     )
-    private String imageUrl;
+    private String imageName;
 }

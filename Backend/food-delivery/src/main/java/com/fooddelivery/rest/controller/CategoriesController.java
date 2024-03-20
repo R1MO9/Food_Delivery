@@ -1,4 +1,4 @@
-package com.fooddelivery.controller;
+package com.fooddelivery.rest.controller;
 
 import com.fooddelivery.constants.FoodDeliveryConstants;
 import com.fooddelivery.dto.ErrorResponseDto;
@@ -29,43 +29,6 @@ import java.util.List;
 public class CategoriesController {
 
     private ICategoriesService categoriesService;
-
-    @Operation(
-            summary = "Create Categories REST API",
-            description = "REST API to create new Categories"
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "HTTP Status CREATED"
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "HTTP Status BAD Request"
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "HTTP Status Internal Server Error",
-                    content = @Content(
-                            schema = @Schema(implementation = ErrorResponseDto.class)
-                    )
-            )
-    }
-    )
-    @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createCategories(@RequestBody Categories categories) {
-        boolean isTrue = categoriesService.createCategories(categories);
-
-        if (isTrue) {
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(new ResponseDto(FoodDeliveryConstants.STATUS_201, FoodDeliveryConstants.MESSAGE_201));
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(new ResponseDto(FoodDeliveryConstants.STATUS_400, FoodDeliveryConstants.MESSAGE_400));
-        }
-    }
 
     @Operation(
             summary = "Fetch ALL Categories REST API",
