@@ -1,0 +1,3 @@
+<img th:if="${not #strings.isEmpty(category.image)}"
+     th:src="@{'data:image/png;base64,' + ${category.image}}"
+     alt="Image not available" />

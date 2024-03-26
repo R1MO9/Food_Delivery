@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+<!-- header -->
+<div th:replace="~{header :: header}">...</div>
+<!-- //header -->
+
+<div class="p-4 sm:ml-64">
+    <div class="flex items-center mb-8 mt-5">
+        <a th:href="@{/admin/dashboard/category}" class="flex flex-row items-center gap-2 text-grey-700">
+            <div>
+                <svg class="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                     height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M5 12h14M5 12l4-4m-4 4 4 4"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-semibold dark:text-white flex items-center">Edit Category</h1>
+            </div>
+        </a>
+    </div>
+    <form th:action="@{/admin/dashboard/category/update(id=${id})}" enctype="multipart/form-data" method="post"
+          th:object="${category}">
+        <div class="grid gap-6 mb-6 md:grid-cols-1">
+            <div>
+                <label for="category_name"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                <input th:value="${name}" type="text" id="category_name" th:field="*{name}"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="Category name..." required/>
+            </div>
+            <div>
+                <label for="category_restaurants"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Restaurants</label>
+                <input th:value="${restaurants}" type="text" id="category_restaurants" th:field="*{restaurants}"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="Number of available restaurants..." required/>
+            </div>
+            <div>
+                <label for="category_quantity"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
+                <input th:value="${quantity}" th:field="*{quantity}"
+                       type="text" id="category_quantity"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="Available number of items..." required/>
+            </div>
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                    image file</label>
+                <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        aria-describedby="file_input_help" id="file_input" th:field="*{file}" type="file">
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF
+                    (MAX. 800x400px).</p>
+            </div>
+        </div>
+        <div>
+            <a th:href="@{/admin/dashboard/category/view(id=${id})}"
+               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">VIEW</a>
+            <button type="submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                UPDATE
+            </button>
+            <a th:href="@{/admin/dashboard/category/delete(id=${id})}"
+               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</a>
+        </div>
+    </form>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+
+</html>

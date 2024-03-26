@@ -1,0 +1,13 @@
+
+    public static ObjectId convertLongToObjectId(long longId) {
+        return new ObjectId(String.valueOf(longId));
+    }
+
+    public static long convertObjectIdToLong(String objectIdString) {
+        ObjectId objectId = new ObjectId(objectIdString);
+        return Long.parseLong(objectId.toString(), 16);
+    }
+
+    public String generateBase64Image(byte[] image) {
+        return Base64.getEncoder().encodeToString(image);
+    }
