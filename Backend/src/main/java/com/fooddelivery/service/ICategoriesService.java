@@ -14,5 +14,6 @@ public interface ICategoriesService {
     public void saveCategory(CategoryDto categoryDto) throws IOException;
     public List<CategoryResponseDto> fetchAllCategory();
     public CategoryResponseDto fetchCategory(ObjectId id);
-
+    public void updateCategory(CategoryDto categoryDto, ObjectId id) throws IOException;
+    public void deleteCategory(ObjectId id);
 }

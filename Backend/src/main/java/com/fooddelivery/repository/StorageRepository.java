@@ -9,5 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface StorageRepository extends MongoRepository<ImageData, ObjectId> {
+
     Optional<ImageData> findByName(String fileName);
+
+    void deleteByName(String name);
 }

@@ -22,7 +22,7 @@ const AddCategory = () => {
     try {
       const response = await axios.post('http://localhost:8080/api/categories/save', formData);
       console.log(response.data);
-      window.location.href = '/dashboard';
+      window.location.href = '/category';
     } catch (error) {
       console.error('There was an error!', error);
     }

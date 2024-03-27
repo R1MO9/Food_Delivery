@@ -17,4 +17,6 @@ public interface IStorageService {
      * @return actual file
      */
     public byte[] downloadImage(String fileName);
+
+    public void deleteImage(String fileName);
 }

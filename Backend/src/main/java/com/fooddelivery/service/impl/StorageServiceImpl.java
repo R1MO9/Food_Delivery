@@ -23,6 +23,12 @@ public class StorageServiceImpl implements IStorageService {
      */
     @Override
     public void uploadImage(MultipartFile file) throws IOException {
+        Optional<ImageData> image = storageRepository.findByName(file.getOriginalFilename());
+
+        if (image.isPresent()) {
+            return;
+        }
+
         ImageData imageData = ImageData.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
@@ -40,6 +46,23 @@ public class StorageServiceImpl implements IStorageService {
     public byte[] downloadImage(String fileName) {
         Optional<ImageData> imageData = storageRepository.findByName(fileName);
 
-        return imageData.map(data -> ImageUtils.decompressImage(data.getImageData())).orElse(null);
+        if (imageData.isPresent()) {
+            return imageData.map(data -> ImageUtils.decompressImage(data.getImageData())).orElse(null);
+        }
+        else {
+            return null;
+        }
     }
+
+    @Override
+    public void deleteImage(String fileName) {
+        Optional<ImageData> imageData = storageRepository.findByName(fileName);
+        if (imageData.isPresent()) {
+            storageRepository.deleteByName(fileName);
+        }
+        else {
+            return;
+        }
+    }
+
 }

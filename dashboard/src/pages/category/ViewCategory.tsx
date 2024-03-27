@@ -8,7 +8,6 @@ const ViewCategory = () => {
 
     const [data, setData] = useState<Category | null>(null);
 
-    console.log(`http://localhost:8080/api/categories/get?id=${id}`);
     useEffect(() => {
         axios.get<Category>(`http://localhost:8080/api/categories/get?id=${id}`)
             .then(response => {
@@ -21,7 +20,7 @@ const ViewCategory = () => {
 
     function deleteCategory() {
         return () => {
-            axios.delete(`http://localhost:8080/api/categories/delete/${id}`)
+            axios.delete(`http://localhost:8080/api/categories/delete?id=${id}`)
                 .then(response => {
                     console.log(response.data);
                     window.location.href = "/category";

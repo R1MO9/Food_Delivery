@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -42,9 +39,14 @@ public class CategoriesServiceImpl implements ICategoriesService {
         List<Categories> categoriesList = categoriesRepository.findAll();
 
         for (Categories categories : categoriesList) {
+            String image;
             CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
             byte[] imageData = storageService.downloadImage(categories.getImageName());
-            String image = ImageUtils.generateBase64Image(imageData);
+            if (imageData != null) {
+                image = ImageUtils.generateBase64Image(imageData);
+            } else {
+                image = null;
+            }
             categoryResponseDto.setId(categories.getId().toString());
             categoryResponseDto.setName(categories.getName());
             categoryResponseDto.setRestaurants(categories.getRestaurants());
@@ -62,9 +64,14 @@ public class CategoriesServiceImpl implements ICategoriesService {
         Optional<Categories> categories = categoriesRepository.findById(id);
 
         if (categories.isPresent()) {
+            String image;
             Categories category = categories.get();
             byte[] imageData = storageService.downloadImage(category.getImageName());
-            String image = ImageUtils.generateBase64Image(imageData);
+            if (imageData != null) {
+                image = ImageUtils.generateBase64Image(imageData);
+            } else {
+                image = null;
+            }
             categoryResponseDto.setId(category.getId().toString());
             categoryResponseDto.setName(category.getName());
             categoryResponseDto.setRestaurants(category.getRestaurants());
@@ -72,6 +79,38 @@ public class CategoriesServiceImpl implements ICategoriesService {
             categoryResponseDto.setImageName(category.getImageName());
             categoryResponseDto.setImage(image);
             return categoryResponseDto;
+        } else {
+            throw new ResourceNotFoundException("Categories", "Id", id.toString());
+        }
+    }
+
+    public void updateCategory(CategoryDto categoryDto, ObjectId id) throws IOException {
+        Optional<Categories> categories = categoriesRepository.findById(id);
+        if (categories.isPresent()) {
+            Categories category = categories.get();
+
+            if (categoryDto.getFile() != null) {
+                if (!(category.getImageName().equals(categoryDto.getFile().getOriginalFilename()))) {
+                    storageService.deleteImage(category.getImageName());
+                    storageService.uploadImage(categoryDto.getFile());
+                    category.setImageName(categoryDto.getFile().getOriginalFilename());
+                }
+            }
+
+            category.setName((category.getName().equals(categoryDto.getName())) ? category.getName() : categoryDto.getName());
+            category.setRestaurants((category.getRestaurants().equals(categoryDto.getRestaurants())) ? category.getRestaurants() : categoryDto.getRestaurants());
+            category.setQuantity((category.getQuantity().equals(categoryDto.getQuantity())) ? category.getQuantity() : categoryDto.getQuantity());
+
+            categoriesRepository.save(category);
+        }
+    }
+
+    public void deleteCategory(ObjectId id) {
+        Optional<Categories> categories = categoriesRepository.findById(id);
+        if (categories.isPresent()) {
+            Categories category = categories.get();
+            storageService.deleteImage(category.getImageName());
+            categoriesRepository.deleteById(category.getId());
         } else {
             throw new ResourceNotFoundException("Categories", "Id", id.toString());
         }

@@ -5,6 +5,7 @@ import com.fooddelivery.dto.CategoryDto;
 import com.fooddelivery.dto.CategoryResponseDto;
 import com.fooddelivery.dto.ResponseDto;
 import com.fooddelivery.service.ICategoriesService;
+import com.mongodb.lang.Nullable;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Generated;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.List;
 
 import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART_FORM_DATA;
@@ -32,7 +32,7 @@ public class CategoriesController {
 
     private ICategoriesService categoriesService;
 
-    @PostMapping(value = "/save", consumes = { MULTIPART_FORM_DATA })
+    @PostMapping(value = "/save", consumes = {MULTIPART_FORM_DATA})
     public ResponseEntity<ResponseDto> saveCategory(@RequestPart("categoryDto") CategoryDto categoryDto, @RequestPart("file") MultipartFile file) throws IOException {
         categoryDto.setFile(file);
         categoriesService.saveCategory(categoryDto);
@@ -49,5 +49,18 @@ public class CategoriesController {
     public ResponseEntity<CategoryResponseDto> fetchCategoryById(@RequestParam(value = "id") ObjectId id) {
         CategoryResponseDto categoryResponseDto = categoriesService.fetchCategory(id);
         return new ResponseEntity<>(categoryResponseDto, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/update", consumes = {MULTIPART_FORM_DATA})
+    public ResponseEntity<ResponseDto> updateCategory(@RequestPart("categoryDto") CategoryDto categoryDto, @RequestPart("file") @Nullable MultipartFile file, @RequestParam(value = "id") ObjectId id) throws IOException {
+        categoryDto.setFile(file);
+        categoriesService.updateCategory(categoryDto, id);
+        return new ResponseEntity<>(new ResponseDto(FoodDeliveryConstants.STATUS_200, FoodDeliveryConstants.MESSAGE_200), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteCategory(@RequestParam(value = "id") ObjectId id) {
+        categoriesService.deleteCategory(id);
+        return new ResponseEntity<>(new ResponseDto(FoodDeliveryConstants.STATUS_200, FoodDeliveryConstants.MESSAGE_200), HttpStatus.OK);
     }
 }

@@ -1,7 +1,21 @@
 import { NavLink } from "react-router-dom";
 import { CategoriesItemProps } from "../../util/type";
+import axios from "axios";
 
 const CategoriesItem: React.FC<CategoriesItemProps> = ({ item, index }) => {
+
+    function deleteCategory(id: string) {
+        return () => {
+            axios.delete(`http://localhost:8080/api/categories/delete?id=${id}`)
+                .then(response => {
+                    console.log(response.data);
+                    window.location.href = "/category";
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        }
+    }
 
     return (
         <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -17,7 +31,7 @@ const CategoriesItem: React.FC<CategoriesItemProps> = ({ item, index }) => {
                 <NavLink to={`/category/edit/${item.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">EDIT</NavLink>
             </td>
             <td className="px-6 py-4">
-                <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">DELETE</button>
+                <button onClick={deleteCategory(item.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">DELETE</button>
             </td>
         </tr>
     )
