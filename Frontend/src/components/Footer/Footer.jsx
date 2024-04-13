@@ -6,8 +6,8 @@ const Footer = () => {
     <div className='bg-slate-200'>
       <div className='container mx-auto py-8 px-4'>
 
-        <div className='flex flex-wrap justify-center py-6'>
-          <div className="m-3">
+        <div className='flex mx-auto w-fit flex-wrap py-6'>
+          <div className="m-3 mx-auto">
             <div className='py-3'>
               <img src="/Images/LOGO 1.png" alt="Order.Uk" className='w-64 mx-auto' />
             </div>

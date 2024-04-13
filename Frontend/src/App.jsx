@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import { useState, useEffect } from 'react';
 import Popular_Categories_Data from './Popular_Categories_Data';
 import Popular_Categories from './components/Popular Categories/Popular_Categories'
 import Popular_Restaurants from './components/Popular Restaurants/Popular_Restaurants';
@@ -11,24 +12,44 @@ import Order_App from './components/Order App/Order_App';
 import Achievement from './components/Achievement/Achievement';
 import Footer from './components/Footer/Footer';
 import Features from './components/Features/Features';
+import Banner from './components/Banner/Banner';
+import Popup from './components/Popup/Popup';
 
 const App = () => {
+
+  
   return (
   <>
     <div>
       <Navbar />
     </div>
-    <div className=' max-w-screen-xl mx-auto'>
+
+    {/* test */}
+    <Popup />
+    
+
+
+    <div className='max-w-screen-xl mx-auto'>
+      {/* Banner */}
+      <div>
+        <Banner />
+      </div>
       {/* Exclusive Deals */}
-      <div className='flex overflow-auto no-scrollbar justify-between'>
+      <div className='flex overflow-auto no-scrollbar justify-between z-10'>
+        <Exclusive_Deals 
+          img='Images\Exclusive Deals\Deal 2.png'
+          discount='20%'
+          restaurants_name='Chef Burgers London'
+        />
         <Exclusive_Deals 
           img='Images\Exclusive Deals\Deal 1.png'
+          discount='30%'
+          restaurants_name='Grand Ai Cafe London'
         />
         <Exclusive_Deals 
           img='Images\Exclusive Deals\Deal 2.png'
-        />
-        <Exclusive_Deals 
-          img='Images\Exclusive Deals\Deal 3.png'
+          discount='20%'
+          restaurants_name='Butterbrot Cafe London'
         />
       </div>
 
@@ -90,7 +111,7 @@ const App = () => {
       {/*  */}
       <Features />
 
-      
+
     </div>
     {/*  */}
     <div>
